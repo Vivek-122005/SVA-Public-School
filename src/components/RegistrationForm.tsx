@@ -16,7 +16,7 @@ export default function RegistrationForm() {
   };
 
   try {
-    const response = await fetch("YOUR_WEB_APP_URL_HERE", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwrdcrSSj7f6HgsIvazLvpPwWBkmr2KND1ee3uXO2qF8sx833cz25yhM1fEVDSHfM4Z/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
