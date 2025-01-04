@@ -1,10 +1,43 @@
 import React from 'react';
 
 export default function RegistrationForm() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  // Gather form data
+  const formData = {
+    studentName: (document.getElementById("studentName") as HTMLInputElement).value,
+    dob: (document.getElementById("dob") as HTMLInputElement).value,
+    class: (document.getElementById("class") as HTMLSelectElement).value,
+    parentName: (document.getElementById("parentName") as HTMLInputElement).value,
+    phone: (document.getElementById("phone") as HTMLInputElement).value,
+    email: (document.getElementById("email") as HTMLInputElement)?.value || null,
+    address: (document.getElementById("address") as HTMLTextAreaElement).value,
   };
+
+  try {
+    const response = await fetch("YOUR_WEB_APP_URL_HERE", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      if (result.status === 'success') {
+        alert('Registration submitted successfully!');
+      } else {
+        alert('Error submitting registration: ' + result.message);
+      }
+    } else {
+      alert('Error submitting registration.');
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert('Failed to submit registration.');
+  }
+};
+
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
