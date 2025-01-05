@@ -26,7 +26,7 @@ export default function AdmissionSection() {
               </div>
             </div>
             <p className="text-gray-600 mb-6">
-              Offer valid for the first 50 students (Playgroup to 8th Class)
+              Offer valid for the first 50 students (3rd to 10th Class)
             </p>
             <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
