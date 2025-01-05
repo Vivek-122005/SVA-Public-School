@@ -1,43 +1,46 @@
 import React from 'react';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBOA-yFtuYmdVjAa9xoj7UeqBfUsQ5iSss",
+  authDomain: "sav-public-school.firebaseapp.com",
+  databaseURL: "https://sav-public-school-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "sav-public-school",
+  storageBucket: "sav-public-school.appspot.com",
+  messagingSenderId: "166292915984",
+  appId: "1:166292915984:web:aa5f0b6c5efc672e690795",
+  measurementId: "G-C8617DEWSF"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Gather form data
-  const formData = {
-    studentName: (document.getElementById("studentName") as HTMLInputElement).value,
-    dob: (document.getElementById("dob") as HTMLInputElement).value,
-    class: (document.getElementById("class") as HTMLSelectElement).value,
-    parentName: (document.getElementById("parentName") as HTMLInputElement).value,
-    phone: (document.getElementById("phone") as HTMLInputElement).value,
-    email: (document.getElementById("email") as HTMLInputElement)?.value || null,
-    address: (document.getElementById("address") as HTMLTextAreaElement).value,
-  };
+    const formData = {
+      studentName: (document.getElementById("studentName") as HTMLInputElement).value,
+      dob: (document.getElementById("dob") as HTMLInputElement).value,
+      class: (document.getElementById("class") as HTMLSelectElement).value,
+      parentName: (document.getElementById("parentName") as HTMLInputElement).value,
+      phone: (document.getElementById("phone") as HTMLInputElement).value,
+      email: (document.getElementById("email") as HTMLInputElement)?.value || null,
+      address: (document.getElementById("address") as HTMLTextAreaElement).value,
+    };
 
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbwrdcrSSj7f6HgsIvazLvpPwWBkmr2KND1ee3uXO2qF8sx833cz25yhM1fEVDSHfM4Z/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      if (result.status === 'success') {
-        alert('Registration submitted successfully!');
-      } else {
-        alert('Error submitting registration: ' + result.message);
-      }
-    } else {
-      alert('Error submitting registration.');
+    const timestamp = new Date().toISOString().replace(/\./g, '-').replace(/:/g, '-');
+    const reference = ref(db, 'registrations/' + timestamp);
+    
+    try {
+      await set(reference, formData);
+      alert('Registration submitted successfully!');
+    } catch (error) {
+      console.error("Error:", error);
+      alert('Failed to submit registration.');
     }
-  } catch (error) {
-    console.error("Error:", error);
-    alert('Failed to submit registration.');
-  }
-};
-
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -144,9 +147,7 @@ export default function RegistrationForm() {
               className="rounded border-gray-300 text-red-600 focus:ring-red-500"
               required
             />
-            <span className="text-sm text-gray-700">
-              I agree to the terms and conditions
-            </span>
+            <span className="text-sm text-gray-700">I agree to the terms and conditions</span>
           </label>
         </div>
 
