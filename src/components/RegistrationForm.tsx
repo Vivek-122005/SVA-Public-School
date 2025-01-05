@@ -60,13 +60,26 @@ export default function RegistrationForm() {
           </div>
           <div>
             <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
-              Date of Birth*
+              Date of Birth* (YYYY-MM-DD)
             </label>
             <input
-              type="date"
+              type="text"
               id="dob"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
               required
+              pattern="\d{4}-\d{2}-\d{2}"
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
+              onBlur={(e) => {
+                const date = new Date(e.target.value);
+                const min = new Date('2000-01-01');
+                const max = new Date('2024-12-31');
+                if (date < min || date > max) {
+                  e.target.setCustomValidity('Date must be between 2000-01-01 and 2024-12-31');
+                } else {
+                  e.target.setCustomValidity('');
+                }
+              }}
             />
           </div>
         </div>
