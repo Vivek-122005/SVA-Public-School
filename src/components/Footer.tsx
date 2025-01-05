@@ -39,7 +39,7 @@ export default function Footer() {
             <div className="flex space-x-4">
 {/*               <a href="#" className="hover:text-red-400 transition-colors">
                 <Facebook className="h-6 w-6" /> */}
-              </a>
+{/*               </a> */}
               <a href="https://www.instagram.com/sva_school_alwar?igsh=OGs0Z290cWQ5eG8x" className="hover:text-red-400 transition-colors">
                 <Instagram className="h-6 w-6" />
               </a>
