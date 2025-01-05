@@ -17,7 +17,7 @@ export default function Header() {
           className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition-colors"
         >
           <Phone className="h-4 w-4" />
-          <span>Call Now</span>
+          <span>Whatsapp Now</span>
         </a>
       </div>
     </header>
