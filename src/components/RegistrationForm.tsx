@@ -81,12 +81,12 @@ export default function RegistrationForm() {
             required
           >
             <option value="">Select Class</option>
-            <option value="playgroup">Playgroup</option>
+{/*             <option value="playgroup">Playgroup</option>
             <option value="nursery">Nursery</option>
-            <option value="kg">KG</option>
+            <option value="kg">KG</option> */}
             {[...Array(8)].map((_, i) => (
-              <option key={i + 1} value={`class${i + 1}`}>
-                Class {i + 1}
+              <option key={i + 3} value={`class${i + 3}`}>
+                Class {i + 3}
               </option>
             ))}
           </select>
