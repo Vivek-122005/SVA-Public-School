@@ -1,21 +1,20 @@
-import React from 'react';
-import Header from './components/Header';
-import ScholarshipSection from './components/scholarship/ScholarshipSection';
-import AdmissionSection from './components/AdmissionSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/home';
+import Data from './pages/data';
+
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main className="pt-16">
-        <ScholarshipSection />
-        <AdmissionSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen">
+        <main className="pt-16">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/data" element={<Data />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
