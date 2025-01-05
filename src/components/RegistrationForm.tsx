@@ -58,26 +58,41 @@ export default function RegistrationForm() {
               required
             />
           </div>
-          <div>
+         <div>
             <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
-              Date of Birth* (YYYY-MM-DD)
+              Date of Birth* (DD/MM/YYYY)
             </label>
             <input
               type="text"
               id="dob"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
               required
-              pattern="\d{4}-\d{2}-\d{2}"
-              placeholder="YYYY-MM-DD"
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
               maxLength={10}
+              defaultValue="__/__/____"
+              onFocus={(e) => {
+                if (e.target.value === "__/__/____") {
+                  e.target.value = "";
+                }
+              }}
               onBlur={(e) => {
-                const date = new Date(e.target.value);
-                const min = new Date('2000-01-01');
-                const max = new Date('2024-12-31');
-                if (date < min || date > max) {
-                  e.target.setCustomValidity('Date must be between 2000-01-01 and 2024-12-31');
-                } else {
-                  e.target.setCustomValidity('');
+                const parts = e.target.value.split('/');
+                if (parts.length === 3) {
+                  const day = parseInt(parts[0]);
+                  const month = parseInt(parts[1]) - 1;
+                  const year = parseInt(parts[2]);
+                  const date = new Date(year, month, day);
+                  const min = new Date('2000-01-01');
+                  const max = new Date('2024-12-31');
+                  if (date < min || date > max) {
+                    e.target.setCustomValidity('Date must be between 01/01/2000 and 31/12/2024');
+                  } else {
+                    e.target.setCustomValidity('');
+                  }
+                }
+                if (!e.target.value) {
+                  e.target.value = "__/__/____";
                 }
               }}
             />
