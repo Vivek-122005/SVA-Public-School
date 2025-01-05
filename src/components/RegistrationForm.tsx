@@ -75,10 +75,18 @@ export default function RegistrationForm() {
                 if (value.length > 0) {
                   // Add slashes after day and month
                   if (value.length >= 2) {
+                    const day = parseInt(value.slice(0, 2));
+                    if (day > 31) value = '31' + value.slice(2);
                     value = value.slice(0, 2) + '/' + value.slice(2);
                   }
                   if (value.length >= 5) {
+                    const month = parseInt(value.slice(3, 5));
+                    if (month > 12) value = value.slice(0, 3) + '12' + value.slice(5);
                     value = value.slice(0, 5) + '/' + value.slice(5);
+                  }
+                  if (value.length >= 10) {
+                    const year = parseInt(value.slice(6, 10));
+                    if (year > 2025) value = value.slice(0, 6) + '2025';
                   }
                   // Limit to 10 characters (DD/MM/YYYY)
                   value = value.slice(0, 10);
@@ -89,9 +97,9 @@ export default function RegistrationForm() {
                 const [day, month, year] = e.target.value.split('/');
                 const date = new Date(year + '-' + month + '-' + day);
                 const min = new Date('2000-01-01');
-                const max = new Date('2024-12-31');
+                const max = new Date('2025-12-31');
                 if (date < min || date > max) {
-                  e.target.setCustomValidity('Date must be between 01/01/2000 and 31/12/2024');
+                  e.target.setCustomValidity('Date must be between 01/01/2000 and 31/12/2025');
                 } else {
                   e.target.setCustomValidity('');
                 }
