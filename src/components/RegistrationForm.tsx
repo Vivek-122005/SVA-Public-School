@@ -70,29 +70,30 @@ export default function RegistrationForm() {
               pattern="\d{2}/\d{2}/\d{4}"
               placeholder="DD/MM/YYYY"
               maxLength={10}
-              defaultValue="__/__/____"
-              onFocus={(e) => {
-                if (e.target.value === "__/__/____") {
-                  e.target.value = "";
+              onChange={(e) => {
+                let value = e.target.value.replace(/\//g, ''); // Remove any existing slashes
+                if (value.length > 0) {
+                  // Add slashes after day and month
+                  if (value.length >= 2) {
+                    value = value.slice(0, 2) + '/' + value.slice(2);
+                  }
+                  if (value.length >= 5) {
+                    value = value.slice(0, 5) + '/' + value.slice(5);
+                  }
+                  // Limit to 10 characters (DD/MM/YYYY)
+                  value = value.slice(0, 10);
                 }
+                e.target.value = value;
               }}
               onBlur={(e) => {
-                const parts = e.target.value.split('/');
-                if (parts.length === 3) {
-                  const day = parseInt(parts[0]);
-                  const month = parseInt(parts[1]) - 1;
-                  const year = parseInt(parts[2]);
-                  const date = new Date(year, month, day);
-                  const min = new Date('2000-01-01');
-                  const max = new Date('2024-12-31');
-                  if (date < min || date > max) {
-                    e.target.setCustomValidity('Date must be between 01/01/2000 and 31/12/2024');
-                  } else {
-                    e.target.setCustomValidity('');
-                  }
-                }
-                if (!e.target.value) {
-                  e.target.value = "__/__/____";
+                const [day, month, year] = e.target.value.split('/');
+                const date = new Date(year + '-' + month + '-' + day);
+                const min = new Date('2000-01-01');
+                const max = new Date('2024-12-31');
+                if (date < min || date > max) {
+                  e.target.setCustomValidity('Date must be between 01/01/2000 and 31/12/2024');
+                } else {
+                  e.target.setCustomValidity('');
                 }
               }}
             />
